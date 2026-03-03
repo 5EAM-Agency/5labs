@@ -1,4 +1,4 @@
-# [5EAM-Agency] 
+# 5EAM-Agency
 
 > Infrastructure and application deployments managed via [FluxCD](https://fluxcd.io/) using GitOps principles.
 
