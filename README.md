@@ -10,21 +10,21 @@ This repo follows the [FluxCD monorepo pattern](https://fluxcd.io/flux/guides/re
 
 | Item | Detail |
 |------|--------|
-| **Flux Version** | `v2.x.x` |
-| **Kubernetes** | `v1.xx` |
-| **Environments** | `production` · `staging` · `dev` |
-| **Container Registry** | `ghcr.io/[your-org]` |
+| Flux Version | `v2.x.x` |
+| Kubernetes | `v1.xx` |
+| Environments | `production` · `staging` · `dev` |
+| Container Registry | `ghcr.io/5eam-agency` |
 
 ---
 
 ## Repository Structure
 
 ```
-fleet-infra/                          # Root of this repository
+fleet-infra/                          # Root of this repo
 │
 ├── clusters/                         # Cluster-level Flux entrypoints
 │   ├── production/
-│   │   ├── flux-system/              # Flux bootstrap components (auto-generated)
+│   │   ├── flux-system/              # Flux bootstrap components (auto-gen)
 │   │   │   ├── gotk-components.yaml
 │   │   │   ├── gotk-sync.yaml
 │   │   │   └── kustomization.yaml
@@ -63,7 +63,7 @@ fleet-infra/                          # Root of this repository
 │       └── kustomization.yaml        # Patches on top of base (HA replicas, etc.)
 │
 ├── apps/                             # Application deployments
-│   ├── base/                         # Base app manifests (DRY)
+│   ├── base/                         # Base app manifests (DRY RUN)
 │   │   ├── [app-name]/
 │   │   │   ├── namespace.yaml
 │   │   │   ├── deployment.yaml
@@ -80,7 +80,7 @@ fleet-infra/                          # Root of this repository
 │       ├── kustomization.yaml
 │       └── [app-name]-patch.yaml
 │
-├── projects/                         # Optional: Multi-team project isolation
+├── projects/                         # Opts: Multi-team project isolation
 │   ├── team-a/
 │   │   ├── rbac.yaml                 # Team-scoped RBAC
 │   │   ├── namespace.yaml
@@ -88,7 +88,7 @@ fleet-infra/                          # Root of this repository
 │   └── team-b/
 │       └── ...
 │
-└── docs/                             # Documentation
+└── docs/                             # Docs
     ├── runbooks/
     ├── architecture.md
     └── onboarding.md
@@ -119,7 +119,7 @@ metadata:
   namespace: flux-system
 spec:
   dependsOn:
-    - name: infrastructure        # ← waits for infra to be Ready
+    - name: infrastructure        # waits for infra to be Ready
   interval: 10m
   path: ./apps/production
   prune: true
@@ -144,8 +144,8 @@ spec:
 
 ```bash
 # 1. Export your GitHub token
-export GITHUB_TOKEN=<your-token>
-export GITHUB_USER=<your-github-username>
+export GITHUB_TOKEN=<Token>
+export GITHUB_USER=<5EAM-Agency>
 
 # 2. Verify prerequisites
 flux check --pre
@@ -190,11 +190,11 @@ git add . && git commit -m "feat: add my-app" && git push
 
 ## Secrets Management
 
-Secrets are **never** stored in plaintext in this repository. Choose one:
+Secrets are never stored in plain text in this repository. Approved options:
 
-- **[SOPS + Age](https://fluxcd.io/flux/guides/mozilla-sops/)** — Encrypt secrets in-repo
-- **[Sealed Secrets](https://github.com/bitnami-labs/sealed-secrets)** — Encrypt with cluster key
-- **[External Secrets Operator](https://external-secrets.io/)** — Pull from Vault / AWS SSM / etc.
+- [SOPS + Age](https://fluxcd.io/flux/guides/mozilla-sops/) — Encrypt secrets in-repo
+- [Sealed Secrets](https://github.com/bitnami-labs/sealed-secrets) — Encrypt with cluster key
+- [External Secrets Operator](https://external-secrets.io/) — Pull from Vault / AWS SSM / etc.
 
 ```bash
 # Example: encrypt a secret with SOPS + Age
@@ -223,7 +223,7 @@ spec:
     commit:
       author:
         name: fluxbot
-        email: flux@[your-org].io
+        email: flux@[CASE-BY-CASE].io
       messageTemplate: "chore: update [app-name] image to {{range .Updated.Images}}{{.}}{{end}}"
     push:
       branch: main
@@ -280,9 +280,8 @@ flux get helmreleases --all-namespaces
 
 | Name | Role | Contact |
 |------|------|---------|
-| [Name] | Platform Lead | @handle |
-| [Name] | DevOps Engineer | @handle |
+| [Name] | Platform Lead | @name |
+| [Name] | DevOps Engineer | @name |
 
 ---
 
-*Managed with ❤️ by [YOUR-ORG] Platform Team using [FluxCD](https://fluxcd.io/)*
